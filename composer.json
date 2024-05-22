@@ -1,0 +1,18 @@
+{
+  "autoload": {
+    "psr-4": {
+      "AshareApp\\": "src/"
+    }
+  },
+  "require": {
+    "slim/psr7": "^1.6",
+    "slim/slim": "^4.13",
+    "vlucas/phpdotenv": "^5.6",
+    "usmanhalalit/pixie": "^2.0",
+    "firebase/php-jwt": "^6.10"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.54",
+    "robmorgan/phinx": "^0.14.0"
+  }
+}
