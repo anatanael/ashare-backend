@@ -31,71 +31,24 @@ Principais Funcionalidades 🛠️
 
 ## Tecnologias utilizadas no backend
 
-- 🛣️ Slim: Gerenciamento de rotas da aplicação;
-- 👮 Php JWT: Controle de acesso a aplicação;
-- 🎲 Phinx: Estruturação e migrações do banco de dados;
-- 🔗 Pixie: Query Builder para conexão com o banco de dados;
-- 🖼️ Imgur: Hospedagem de imagens;
+- Laravel + Docker
 
 ## Configuração de Variáveis de Ambiente
 
 O projeto utiliza variáveis de ambiente para configurar ambientes distintos
 
-### Ambiente em execução
-
-- DEFAULT_ENV=
-  - development
-  - production
-  - testing
-
-### Banco de Dados
-
-#### Desenvolvimento
-
-- DB_DRIVER_DEVELOPMENT=
-- DB_HOST_DEVELOPMENT=
-- DB_NAME_DEVELOPMENT=
-- DB_USER_DEVELOPMENT=
-- DB_PASS_DEVELOPMENT=
-- DB_PORT_DEVELOPMENT=
-- DB_CHARSET_DEVELOPMENT=
-- DB_COLLATION_DEVELOPMENT=
-
-#### Produção
-
-- DB_DRIVER_PRODUCTION=
-- DB_HOST_PRODUCTION=
-- DB_NAME_PRODUCTION=
-- DB_USER_PRODUCTION=
-- DB_PASS_PRODUCTION=
-- DB_PORT_PRODUCTION=
-- DB_CHARSET_PRODUCTION=
-- DB_COLLATION_PRODUCTION=
-
-#### Testing
-
-- DB_DRIVER_TESTING=
-- DB_HOST_TESTING=
-- DB_NAME_TESTING=
-- DB_USER_TESTING=
-- DB_PASS_TESTING=
-- DB_PORT_TESTING=
-- DB_CHARSET_TESTING=
-- DB_COLLATION_TESTING=
-
-### Tokens JWT
-
-- JWT_ACCESS_TOKEN=
-- JWT_REFRESH_TOKEN=
-
-### Imgur API
-
-- IMGUR_CLIENT_ID=
+- JWT_SECRET -> Token secret para gerar validação de usuário na api;
+- JWT_TTL -> Duração do token em milissegundos
+- APP_TIMEZONE -> Para controle do horário do banco de dados. Ex: "America/Sao_Paulo"
 
 ## Instalação
 
 ```bash
-composer install
+docker-compose up -d
+```
+
+```bash
+docker-compose exec app bash
 ```
 
 ## Banco de Dados
@@ -103,19 +56,7 @@ composer install
 ### Migrations
 
 ```bash
-./vendor/bin/phinx migrate
-```
-
-### Seeds
-
-```bash
-./vendor/bin/phinx seed:run
-```
-
-## Executar
-
-```bash
-php -S localhost:5000 -t ./src
+php artisan migrate
 ```
 
 # Rotas da aplicação

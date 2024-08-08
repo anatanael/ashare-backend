@@ -124,7 +124,6 @@ $rules = [
   'switch_case_space'              => true,
   'ternary_operator_spaces'        => true,
   'trailing_comma_in_multiline'    => true,
-  'trim_array_spaces'              => true,
   'unary_operator_spaces'          => true,
   'visibility_required'            => [
     'elements' => ['method', 'property'],
@@ -134,12 +133,13 @@ $rules = [
 ];
 
 $finder = Finder::create()->in([
-  __DIR__ . '/src',
+  __DIR__ . '/',
 ])
   ->name('*.php')
   ->notName('*.blade.php')
   ->ignoreDotFiles(true)
-  ->ignoreVCS(true);
+  ->ignoreVCS(true)
+  ->exclude(['.docker', 'docker', 'vendor']);
 
 $config = new Config();
 
