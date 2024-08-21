@@ -5,14 +5,16 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/user', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/validateToken', [AuthController::class, 'validateToken']);
+Route::post('user', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+Route::post('validateToken', [AuthController::class, 'validateToken']);
 
-Route::get('/public/note', [NoteController::class, 'indexPublic']);
-Route::get('/public/note/{id}', [NoteController::class, 'showPublic']);
-Route::post('/public/note', [NoteController::class, 'storePublic']);
-Route::delete('/public/note/{id}', [NoteController::class, 'destroyPublic']);
+Route::group(['prefix' => 'free'], function () {
+  Route::get('note', [NoteController::class, 'indexPublic']);
+  Route::get('note/{id}', [NoteController::class, 'showPublic']);
+  Route::post('note', [NoteController::class, 'storePublic']);
+  Route::delete('note/{id}', [NoteController::class, 'destroyPublic']);
+});
 
 Route::middleware(['api', 'prefix' => 'auth'])->group(function () {
   Route::post('category', [CategoryController::class, 'store']);

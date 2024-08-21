@@ -7,6 +7,7 @@ use App\Http\Requests\Note\StorePublicNoteRequest;
 use App\Http\Resources\NoteResource;
 use App\Models\Category;
 use App\Models\Note;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -14,7 +15,7 @@ class NoteController extends Controller
   {
     $validatedData = $request->validationData();
 
-    $userId = auth()->id();
+    $userId = Auth::id();
     $validatedData['user_id'] = $userId;
 
     $categoryId = $validatedData['category_id'];
@@ -31,7 +32,7 @@ class NoteController extends Controller
 
   public function show($id)
   {
-    $userId = auth()->user()->id;
+    $userId = Auth::user()->id;
     $note = Note::where('id', $id)->where('user_id', $userId)->first();
 
     if (!$note) {
@@ -43,7 +44,7 @@ class NoteController extends Controller
 
   public function destroy($id)
   {
-    $user_id = auth()->id();
+    $user_id = Auth::id();
     $note = Note::where('id', $id)->where('user_id', $user_id)->first();
 
     if (!$note) {

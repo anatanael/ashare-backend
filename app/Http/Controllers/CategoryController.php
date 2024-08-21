@@ -8,6 +8,7 @@ use App\Http\Resources\NoteResource;
 use App\Models\Category;
 use App\Models\Note;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -23,7 +24,7 @@ class CategoryController extends Controller
   {
     $validatedData = $request->validationData();
 
-    $userId = auth()->id();
+    $userId = Auth::id();
     $validatedData['user_id'] = $userId;
 
     $category = Category::create($validatedData);
