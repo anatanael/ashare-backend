@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Category\StoreCategoryRequest;
+use App\Http\Requests\Category\UpdateCoverCategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\NoteResource;
 use App\Models\Category;
 use App\Models\Note;
+use App\Services\PCloudService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,5 +61,36 @@ class CategoryController extends Controller
     $notes = Note::where('category_id', $idCategory)->where('user_id', $user->id)->orderBy('created_at')->get();
 
     return response()->json(['notes' => NoteResource::collection($notes)]);
+  }
+
+  public function updateCover(UpdateCoverCategoryRequest $request, $id)
+  {
+    $user = $request->user();
+    $ownerCategory = Category::where('id', $id)->where('user_id', $user->id)->first();
+
+    if (!$ownerCategory) {
+      return response()->noContent(404);
+    }
+
+    $imageCover = $request->file('cover');
+
+    $fileId = PCloudService::upload($imageCover, $imageCover->getClientOriginalName());
+
+    $coverLink = '';
+    if ($fileId) {
+      $coverLink = PCloudService::getLink($fileId);
+    }
+
+    if ($coverLink) {
+      $updatedCategory = Category::where('id', $id)->update(['url_image' => $coverLink]);
+
+      if ($updatedCategory) {
+        $category = Category::where('id', $id)->first();
+
+        return response()->json(['category' => new CategoryResource($category)]);
+      }
+    }
+
+    return response()->noContent(404);
   }
 }

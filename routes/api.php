@@ -22,6 +22,8 @@ Route::middleware(['api', 'prefix' => 'auth'])->group(function () {
   Route::delete('category/{id}', [CategoryController::class, 'destroy']);
   Route::get('category/{id}/notes', [CategoryController::class, 'getNotes']);
 
+  Route::post('category/{id}/updateCover', [CategoryController::class, 'updateCover']);
+
   Route::get('note/{id}', [NoteController::class, 'show']);
   Route::post('note', [NoteController::class, 'store']);
   Route::delete('note/{id}', [NoteController::class, 'destroy']);
