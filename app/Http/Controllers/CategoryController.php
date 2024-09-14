@@ -74,11 +74,11 @@ class CategoryController extends Controller
 
     $imageCover = $request->file('cover');
 
-    $fileId = PCloudService::upload($imageCover, $imageCover->getClientOriginalName());
+    $fileUploaded = PCloudService::upload($imageCover, $imageCover->getClientOriginalName());
 
     $coverLink = '';
-    if ($fileId) {
-      $coverLink = PCloudService::getLink($fileId);
+    if ($fileUploaded->fileId) {
+      $coverLink = PCloudService::getPublicLinkFile($fileUploaded->fileId);
     }
 
     if ($coverLink) {
